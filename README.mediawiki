@@ -16,3 +16,33 @@ This plugin is pretty easy to use
 
 ===Some Configure options===
 
+If you already have a table named revisions in your project and need to call the it something else then 
+make a new table/model in your project that has the same schema as this plugin and pass that model name
+to the actAs setup like so
+
+	var $actAs('Revisionable.Revisionable'=>array('revisionableModel'=>$newModelName));
+
+
+==To Do==
+
+So far aside from creating a revision everytime the data changes the only other feature of this plugin
+is the listRevisions function.  It works like this
+
+	$revisions = $this->Model->listRevisions($this->Model->id);
+
+	print_r($revisions);
+	array(
+		'2011-12-05 01:01:01'=>array(
+			'Pages' => array(
+				'id'=> '4edd8cc3-a628-490b-8cbf-6435ac1005e9',
+				'name'=> 'foobar',
+				'body'=> '....'
+			)
+		)
+	);
+
+Need to create some more functions that add to this, like a a restore where you pass the id & date and 
+it will do a restore and perhaps a diff viewer.  Patches are warmly welcome.
+
+-Analog
+			
