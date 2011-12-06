@@ -1,0 +1,18 @@
+==CakePHP Simple Revisionable Behavior==
+This is a simple small plugin that adds a revisionable behavior to any of your models
+
+It does this by grabbing a copy of your row right before you save it and saving a serialized copy of it in the serialize table
+
+This plugin is pretty easy to use
+
+===Setup===
+1) First you need to add the table to your project  use the following to generate that
+	cake schema create Revisionable.revision
+
+2) add the behavior to your model like so 
+
+	var $actAs = array('Revisionable.Revisionable');
+
+
+===Some Configure options===
+
