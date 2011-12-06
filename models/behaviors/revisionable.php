@@ -105,7 +105,7 @@ class RevisionableBehavior extends ModelBehavior {
 	 * @return mixed // array('YYYY-MM-DD HH:MM:SS'=>array('Model->alias'=>$data))
 	 */
 	 function listRevisions(&$Model, $row_id = null){
-		if(!id || !$Model){
+		if(!$row_id || !$Model){
 			return false;
 		}
 		$results = array();
@@ -120,6 +120,34 @@ class RevisionableBehavior extends ModelBehavior {
 				return false;
 			}
 		}else{
+			return false;
+		}
+	}
+
+	/**
+	 * restoreVersionByDate restore a version based off it's date
+	 *
+	 * Restores a version back
+	 * @param object $Model
+	 * @param string/int $row_id  if using uuid this is a string, if using auto increment this is int
+	 * @param string $date
+	 * @return boolean
+	 */
+	 function restoreVersionByDate(&$Model, $row_id = null, $date = null){
+		if(!$row_id || !$Model){
+			return false;
+		}
+		$results = array();
+		$name = $this->revModel->alias;
+		if($revision = $this->revModel->find('first',array('conditions'=>array($name.'.model'=>$Model->alias, $name.'.row_id'=>$row_id, $name.'.date'=>$date)))){
+			if($Model->Save($revision)){
+				return true;
+			}else{
+				$this->log("Failed to Save revision:".print_r($revision,1),'error');
+				return false;
+			}
+		}else{
+			$this->log("Failed to find revision for {$Model->alias}:{$row_id} on {$date}.",'error');
 			return false;
 		}
 	}
