@@ -7,11 +7,11 @@ This plugin is pretty easy to use
 
 ===Setup===
 1) First you need to add the table to your project  use the following to generate that
-	cake schema create Revisionable.revision
+	'''cake schema create Revisionable.revision'''
 
 2) add the behavior to your model like so 
 
-	var $actAs = array('Revisionable.Revisionable');
+	'''var $actAs = array('Revisionable.Revisionable');'''
 
 
 ===Some Configure options===
@@ -41,8 +41,9 @@ is the listRevisions function.  It works like this
 		)
 	);
 
-Need to create some more functions that add to this, like a a restore where you pass the id & date and 
-it will do a restore and perhaps a diff viewer.  Patches are warmly welcome.
+Need to create some more functions that add to this, like perhaps a diff viewer
+
+Patches are warmly welcome.
 
 -Analog
 			
