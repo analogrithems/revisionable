@@ -144,7 +144,8 @@ class RevisionableBehavior extends ModelBehavior {
 		$results = array();
 		$name = $this->revModel->alias;
 		if($revision = $this->revModel->find('first',array('conditions'=>array($name.'.model'=>$Model->alias, $name.'.row_id'=>$row_id, $name.'.date'=>$date)))){
-			if($Model->save($revision)){
+			$revision = unserialize($revision[$this->revModel->alias]['data']]);
+			if($Model->saveAll($revision)){
 				return true;
 			}else{
 				$this->log("Failed to Save revision:".print_r($revision,1),'error');
