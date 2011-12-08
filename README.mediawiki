@@ -13,6 +13,7 @@ This plugin is pretty easy to use
 
 	'''var $actAs = array('Revisionable.Revisionable');'''
 
+3)  I've discovered that cakephp has some bugs in it's schema create script that doesn't account for longblob, so make sure that after you run the '''cake schema create Revisionable.revision''' you go change the data type for the data column to longblob otherwise you may not get your revision saved properly.
 
 ===Some Configure options===
 
