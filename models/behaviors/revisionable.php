@@ -87,7 +87,7 @@ class RevisionableBehavior extends ModelBehavior {
 
 		$revision[$this->revModel->alias]['row_id'] = $Model->id;
 		$revision[$this->revModel->alias]['model'] = $Model->alias;
-		$revision[$this->revModel->alias]['data'] = serialize($Model->find('first',$Model->id));
+		$revision[$this->revModel->alias]['data'] = serialize($Model->read());
 	
 		if($revisioned = $this->revModel->save($revision)){
 			$this->log("Created a revision of {$Model->alias} / {$Model->id}",'debug');
@@ -144,7 +144,7 @@ class RevisionableBehavior extends ModelBehavior {
 		$results = array();
 		$name = $this->revModel->alias;
 		if($revision = $this->revModel->find('first',array('conditions'=>array($name.'.model'=>$Model->alias, $name.'.row_id'=>$row_id, $name.'.date'=>$date)))){
-			$revision = unserialize($revision[$this->revModel->alias]['data']]);
+			$revision = unserialize($revision[$this->revModel->alias]['data']);
 			if($Model->saveAll($revision)){
 				return true;
 			}else{
