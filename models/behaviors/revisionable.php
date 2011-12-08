@@ -82,6 +82,9 @@ class RevisionableBehavior extends ModelBehavior {
 			return true;
 		}
 
+		//Set recurision to 1
+		$Model->recursive = 1;
+
 		$revision[$this->revModel->alias]['row_id'] = $Model->id;
 		$revision[$this->revModel->alias]['model'] = $Model->alias;
 		$revision[$this->revModel->alias]['data'] = serialize($Model->find('first',$Model->id));
@@ -96,7 +99,7 @@ class RevisionableBehavior extends ModelBehavior {
 	 }
 		
 	/**
-	 * listRevisions list a model/row's revisions
+	 * revisions list a model/row's revisions
 	 *
 	 * Search through the revisions table for a list of all revisions for a model/row combination
 	 *
@@ -104,12 +107,13 @@ class RevisionableBehavior extends ModelBehavior {
 	 * @param string/int $row_id  if using uuid this is a string, if using auto increment this is int
 	 * @return mixed // array('YYYY-MM-DD HH:MM:SS'=>array('Model->alias'=>$data))
 	 */
-	 function listRevisions(&$Model, $row_id = null){
+	 function revisions(&$Model, $row_id = null){
 		if(!$row_id || !$Model){
 			return false;
 		}
 		$results = array();
 		$name = $this->revModel->alias;
+
 		if($revisions = $this->revModel->find('all',array('conditions'=>array($name.'.model'=>$Model->alias, $name.'.row_id'=>$row_id)))){
 			if(is_array($revisions)){
 				foreach($revisions as $rev){
